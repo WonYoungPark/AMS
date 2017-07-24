@@ -28,8 +28,7 @@ public class User implements UserDetails {
     private Boolean isEnabled;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
     /**
      * 사용자에게 권한을 부여함
@@ -50,13 +49,20 @@ public class User implements UserDetails {
 //        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 //        return authorities;
 
-        Set<String> roles = new HashSet<>();
-        roles.add("ROLE_USER");
-        roles.add("ROLE_ADMIN");
-        roles.add("ROLE_SUPER");
+//        Set<String> roles = new HashSet<>();
+//        roles.add("ROLE_USER");
+//        roles.add("ROLE_ADMIN");
+//        roles.add("ROLE_SUPER");
+//        Collection<GrantedAuthority> authorities = new HashSet<>();
+//        for(String role : roles) {
+//            authorities.add(new SimpleGrantedAuthority(role));
+//        }
+//        return authorities;
+
         Collection<GrantedAuthority> authorities = new HashSet<>();
+        String roles[] = role.split(", ");
         for(String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
+            authorities.add((new SimpleGrantedAuthority("ROLE_" + role)));
         }
         return authorities;
     }

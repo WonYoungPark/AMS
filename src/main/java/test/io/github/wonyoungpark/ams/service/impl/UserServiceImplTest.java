@@ -37,7 +37,7 @@ public class UserServiceImplTest {
     public void testGetUserByUsername() throws Exception {
         String username = "admin";
 
-        User user = userService.getUserByUsername(username);
+        User user = userService.findByUsername(username);
 
         System.out.println(user);
 
