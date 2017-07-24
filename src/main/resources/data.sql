@@ -1,8 +1,10 @@
+SELECT  1 FROM DUAL;
+
 -- 사용자
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (1, 'super', '1234', true, 'SUPER');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (2, 'admin', '1234', true, 'ADMIN');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (3, 'user', '1234', true, 'USER');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (4, 'one0', '1234', true, 'USER');
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (1, 'super', '1234', true, 'ROLE_SUPER');
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (2, 'admin', '1234', true, 'ROLE_ADMIN');
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (3, 'user', '1234', true, 'ROLE_USER');
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (4, 'one0', '1234', true, 'ROLE_USER');
 
 
 
