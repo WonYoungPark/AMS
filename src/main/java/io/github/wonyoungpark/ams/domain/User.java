@@ -60,7 +60,7 @@ public class User implements UserDetails {
 //        return authorities;
 
         Collection<GrantedAuthority> authorities = new HashSet<>();
-        String roles[] = role.split(", ");
+        String roles[] = role.toUpperCase().split(", ");
         for(String role : roles) {
             authorities.add((new SimpleGrantedAuthority("ROLE_" + role)));
         }
