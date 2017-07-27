@@ -22,7 +22,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         // 해당 경로를 login템플릿으로 매핑
-        registry.addViewController("/login").setViewName("login");
+        //registry.addViewController("/login").setViewName("login");
     }
 //
 //    /**
