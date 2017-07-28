@@ -1,5 +1,7 @@
 package io.github.wonyoungpark.ams.config;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -33,5 +35,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 //        // 타입의 객체가 컨트롤러 매개변수로 있을 떄 처리할 리졸버 설정
 //        argumentResolvers.add(new UserHandlerMethodArgumentResolver());
-//    }ㅍ
+//    }
+
+    /**
+     * ModelMapper 설정
+     * @return
+     */
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }
+
