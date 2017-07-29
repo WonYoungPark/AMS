@@ -1,10 +1,10 @@
 SELECT  1 FROM DUAL;
 
 -- 사용자
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (1, 'super', '1234', true, 'SUPER, ADMIN, USER');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (2, 'admin', '1234', true, 'ADMIN, USER');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (3, 'user', '1234', true, 'USER');
-INSERT INTO user (ID, username, password, is_enabled, role) VALUES (4, 'one0', '1234', true, 'USER');
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (1, 'super', '$2a$06$M0zAdTI8owjgt1SiYgp.VOaK.5ca2.pghCoxMOHr/LPc8lNerUpai', true, 'SUPER, ADMIN, USER'); -- 비밀번호 1234
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (2, 'admin', '$2a$06$M0zAdTI8owjgt1SiYgp.VOaK.5ca2.pghCoxMOHr/LPc8lNerUpai', true, 'ADMIN, USER'); -- 비밀번호 1234
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (3, 'user', '$2a$06$M0zAdTI8owjgt1SiYgp.VOaK.5ca2.pghCoxMOHr/LPc8lNerUpai', true, 'USER'); -- 비밀번호 1234
+INSERT INTO user (ID, username, password, is_enabled, role) VALUES (4, 'one0', '$2a$06$M0zAdTI8owjgt1SiYgp.VOaK.5ca2.pghCoxMOHr/LPc8lNerUpai', true, 'USER'); -- 비밀번호 1234
 
 
 
