@@ -1,5 +1,6 @@
 package io.github.wonyoungpark.ams.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +22,19 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String username;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
+
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date joined;
+
 
     @Column(nullable = false)
     private Boolean isEnabled;
