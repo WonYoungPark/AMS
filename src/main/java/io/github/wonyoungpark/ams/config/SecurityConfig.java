@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
             .exceptionHandling()
-               .authenticationEntryPoint(unauthorizedHandler)
+               .authenticationEntryPoint(unauthorizedHandler) // 인증되지 않은 Request를 처리
         .and()
             .authorizeRequests()
             .antMatchers("/**").hasRole("USER")
@@ -106,6 +106,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .formLogin()
             .defaultSuccessUrl("/adadadasdadadad", true) // 인증 성공시 이동경로
+            .successHandler(authenticationSuccessHandler) // 인증이 성공한 경우
+            .failureHandler(authenticationFailureHandler) // 인증이 실패한 경우
             .usernameParameter("username")
             .passwordParameter("password")
             .permitAll()
