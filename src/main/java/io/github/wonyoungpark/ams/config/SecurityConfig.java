@@ -14,11 +14,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import static org.hibernate.criterion.Restrictions.and;
 
 /**
  * Created by one0 on 2017. 7. 15..
@@ -82,24 +86,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        //http.csrf().ignoringAntMatchers("/h2-console/**");
+        http
+            // we don't need CSRF because our token is invulnerable
+            .csrf().disable()
+            // don't create session
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+            .exceptionHandling()
+               .authenticationEntryPoint(unauthorizedHandler)
+        .and()
+            .authorizeRequests()
+            .antMatchers("/**").hasRole("USER")
+            .antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "SUPER")
+            .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER")
+            .antMatchers("/super/**").hasRole("SUPER")
+            .antMatchers(HttpMethod.POST, LOGIN_API).permitAll()
+            .antMatchers(LOGOUT_API).permitAll()
+        .and()
+            .formLogin()
+            .defaultSuccessUrl("/adadadasdadadad", true) // 인증 성공시 이동경로
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .permitAll()
+        .and()
+            .addFilterBefore(jwtAuthenticationTokenFilter(), BasicAuthenticationFilter.class)
+        .and()
+            .logout().permitAll().logoutSuccessUrl("/logout");
 
-        http.authorizeRequests()
-                .antMatchers("/**").hasRole("USER")
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "SUPER")
-                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER")
-                .antMatchers("/super/**").hasRole("SUPER")
-                .antMatchers(HttpMethod.POST, LOGIN_API).permitAll()
-                .antMatchers(LOGOUT_API).permitAll()
-                .and()
-                .formLogin()
-                .defaultSuccessUrl("/adadadasdadadad", true) // 인증 성공시 이동경로
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .permitAll()
-                .and()
-                .logout().permitAll().logoutSuccessUrl("/logout");
+
+
     }
 
     @Bean
