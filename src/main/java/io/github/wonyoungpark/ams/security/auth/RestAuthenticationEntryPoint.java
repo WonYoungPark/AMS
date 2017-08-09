@@ -1,4 +1,4 @@
-package io.github.wonyoungpark.ams.security;
+package io.github.wonyoungpark.ams.security.auth;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package io.github.wonyoungpark.ams.security;
+package io.github.wonyoungpark.ams.security.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,11 @@ public class LogoutSuccess implements LogoutSuccessHandler {
     private ObjectMapper objectMapper;
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse response, Authentication authentication)
-            throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Map<String, String> result = new HashMap<>();
-        result.put( "result", "success" );
+        result.put("result", "success");
         response.setContentType("application/json");
-        response.getWriter().write( objectMapper.writeValueAsString( result ) );
+        response.getWriter().write(objectMapper.writeValueAsString(result));
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
