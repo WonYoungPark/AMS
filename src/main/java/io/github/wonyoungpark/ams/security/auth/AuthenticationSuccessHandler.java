@@ -3,7 +3,7 @@ package io.github.wonyoungpark.ams.security.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.wonyoungpark.ams.domain.User;
 import io.github.wonyoungpark.ams.domain.UserTokenState;
-import io.github.wonyoungpark.ams.security.TokenHelper;
+import io.github.wonyoungpark.ams.security.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -22,20 +22,20 @@ import java.io.IOException;
  */
 @Component
 public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    @Value("${jwt.expires_in}")
-    private int EXPIRES_IN;
+	@Value("${jwt.expires_in}")
+	private int EXPIRES_IN;
 
-    @Value("${jwt.cookie}")
-    private String TOKEN_COOKIE;
+	@Value("${jwt.cookie}")
+	private String TOKEN_COOKIE;
 
 	@Value("${app.user_cookie}")
 	private String USER_COOKIE;
 
 	@Autowired
-	private TokenHelper tokenHelper;
+	private TokenUtil tokenUtil;
 
 	@Autowired
-    private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication ) throws IOException, ServletException {
@@ -43,15 +43,15 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
 		User user = (User)authentication.getPrincipal();
 
 		// jws( JSON Web Signature)
-		String jws = tokenHelper.generateToken(user.getUsername());
+		String jws = tokenUtil.generateToken(user.getUsername());
 
-        // Create token auth Cookie
-        Cookie authCookie = new Cookie(TOKEN_COOKIE, jws);
+		// Create token auth Cookie
+		Cookie authCookie = new Cookie(TOKEN_COOKIE, jws);
 		authCookie.setPath("/");
 		authCookie.setHttpOnly(true);
 		authCookie.setMaxAge(EXPIRES_IN);
 		// Create flag Cookie
-		Cookie userCookie = new Cookie(USER_COOKIE, user.getFirstname());
+		Cookie userCookie = new Cookie(USER_COOKIE, user.getFirstName());
 		userCookie.setPath("/");
 		userCookie.setMaxAge(EXPIRES_IN);
 		// Add cookie to response
@@ -61,6 +61,6 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
 		UserTokenState userTokenState = new UserTokenState(jws, EXPIRES_IN);
 		String jwtResponse = objectMapper.writeValueAsString(userTokenState);
 		response.setContentType("application/json");
-		response.getWriter().write(jwtResponse);
+	    response.getWriter().write(jwtResponse);
 	}
 }
